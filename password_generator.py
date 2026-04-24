@@ -2,7 +2,8 @@ import random
 import string
 import pyperclip
 
-print("=== Advanced Password Generator ===\n")
+def main():
+    print("=== Advanced Password Generator ===\n")
 
 #Get password length
 while True:
@@ -16,11 +17,28 @@ while True:
         else:
             print("Please enter a valid number.")
 
-#Get user prefeces 
-use_upper = input("Include uppercase letters? (y/n): ").lower() == 'y'
-use_lower = input("Include lowercase letters? (y/n): ").lower() == 'y'
-use_numbers = input("include numbers? (y/n): ").lower() == 'y'
-use_symbols = input("Include special symbols? (y/n): ").lower() == 'y'
+#Present modes
+print("\nChoose password type:")
+print("1. strong (Upper, lower, numbers, symbols)")
+print("2.medium (upper, lower, Numbers)")
+print("3. simple (letters only)")
+
+while True:
+    choice = input("\nEnter your choice (1/2/3): ").strip()
+    if choice in ["1", "2", "3"]:
+        break
+    print("Please enter 1, 2, or 3.")
+
+#set character requirements based on choice
+if choice == "1":
+    char_pool= string.ascii_letters + string.digits + string.punctuation
+    print("Mode: Strong" )
+elif choice == "2":
+    char_pool = string.ascii_letters + string.digits
+    print("Mode: Medium")
+else:
+    char_pool = string.ascii_letters
+    print("Mode: Simple")
 
 #Get how many passwords to generate
 while True:
@@ -32,25 +50,8 @@ while True:
     except ValueError:
         print("Please enter a valid number. ")
 
-#Build the character pool based on user choices
-char_pool = ""
-
-if use_lower:
-    char_pool += string.ascii_lowercase
-if use_upper:
-    char_pool += string.ascii_uppercase
-if use_numbers:
-    char_pool += string.digits
-if use_symbols:
-    char_pool += string.punctuation
-
-# Safety check
-if not char_pool:
-    print("You must select at least one character type!")
-    exit()
-
-# Generate passwords
-print(f"\nGeneratin {quantity} password(s)... \n")
+# Generate passwords and display them
+print(f"\nGenerating {quantity} password(s)... \n")
 
 passwords = [] 
 
@@ -67,3 +68,8 @@ else:
     #copy the first one and notify
     pyperclip.copy(passwords[0])
     print("\nFirst password has been copied to clipboard!")
+
+# this line runs the main function when you run the script
+if __name__ == "__main__":
+    main()
+
